@@ -1,12 +1,15 @@
-package edu.domain;
+package edu;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Customer {
 	
 	private String id;
 	private String name;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	private Integer age;
 	private BigDecimal salary;
@@ -37,6 +40,7 @@ public class Customer {
 		this.name = name;
 	}
 	
+
 	public Date getBirthday() {
 		return birthday;
 	}

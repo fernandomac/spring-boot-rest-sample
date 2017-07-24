@@ -1,12 +1,9 @@
-package edu.repo;
+package edu;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.NotFoundException;
-
-import edu.domain.Customer;
-import edu.domain.SearchResult;
 
 public class CustomerRepo {
 	

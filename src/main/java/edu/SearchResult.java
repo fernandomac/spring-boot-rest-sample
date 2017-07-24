@@ -1,4 +1,4 @@
-package edu.domain;
+package edu;
 
 import java.util.Collection;
 
