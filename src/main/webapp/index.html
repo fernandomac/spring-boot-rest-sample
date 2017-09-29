@@ -1,10 +1,138 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<p>sample rest spring boot</p>
-</body>
+	<head>
+		<meta charset="UTF-8">	
+	 	<link rel="icon" href="/image/favicon.png?v=1" type="image/x-icon" />
+	 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.css">
+	 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	 	<link rel="stylesheet" href="./css/1.1.1/autopeca.min.css">
+	<!--  	<link rel="stylesheet" href="./css/main.css"> -->
+	<!--  	<link rel="stylesheet" href="./css/autopeca.css"> -->
+	 	<title>Portal Peças</title>
+	 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+	</head>
+	<body ng-app="autopecaApp" ng-controller="MainCtrl as mainctrl"> 	
+	    	
+		<!-- jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>	
+		<!--    angular -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_pt-br.min.js"></script>	    
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+		<!--    angular-material -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.js"></script>
+	    
+	    <!--    chart -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>    
+	    
+	    <!-- 	resource	 -->
+		<script src="./resource/angular-chart.js"></script>
+		<script src="./resource/moment.js"></script> 
+		
+		<!-- 	autopeca	 -->
+		<script src="./js/1.1.1/autopeca.js"></script>
+
+		<div ng-view id="div-viewer"></div>
+			  	 
+		<div id="backdrop-loading" class="modal-backdrop" style="background-color: rgba(255, 255, 255, 0.7); display: none; z-index: 99999">
+			<div class="msg-loading" align="center">
+		 		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+			</div>
+		</div>
+		
+		<div class="md-padding" id="popupContainer" ng-cloak>
+	
+			<md-sidenav md-theme="blue-grey"						
+						md-component-id="left" ng-click="mainctrl.closeToggleLeft()"
+						class="md-sidenav-left">
+						
+				<md-list class="fixedRows" ng-click="mainctrl.goHome()">
+					<md-list-item class="md-2-line contact-item">
+						<img ng-src="/image/fv-logo.png" class="md-avatar" alt="{{ i18n.app_title }}" />
+						<div class="md-list-item-text compact">
+							<h4>{{ i18n.app_title }}</h4>
+							<p>{{ i18n.app_slogan }}</p>
+						</div>
+					</md-list-item>
+			    </md-list>								
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/search-part" style="text-align:left"
+							title="{{ i18n.tlt_view_part }}"  aria-label="{{ i18n.tlt_view_part }}"> 
+					<i class="material-icons md-36">settings</i> {{ i18n.tlt_view_part }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/search-customer" style="text-align:left"
+						title="{{ i18n.tlt_view_customer }}" aria-label="{{ i18n.tlt_view_customer }}"> 
+					<i class="material-icons md-36">perm_identity</i> {{ i18n.tlt_view_customer }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/search-purchase" style="text-align:left"
+						title="{{ i18n.tlt_view_work }}"  aria-label="{{ i18n.tlt_view_work }}"> 
+					<i class="material-icons md-36">shopping_cart</i> {{ i18n.tlt_view_work }}
+				</md-button>					
+				
+<!-- 				<md-button class="md-toolbar md-primary" ng-href="#/chart" style="text-align:left" -->
+<!-- 							title="{{ i18n.tlt_view_statistic }}"  aria-label="{{ i18n.tlt_view_statistic }}">   -->
+<!-- 					<i class="material-icons md-36">trending_up</i> {{ i18n.tlt_view_statistic }} -->
+<!-- 				</md-button> -->
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/office" style="text-align:left"
+							title="{{ i18n.tlt_view_office }}"  aria-label="{{ i18n.tlt_view_office }}">  
+					<i class="material-icons md-36">store</i> {{ i18n.tlt_view_office }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-click="mainctrl.logout()" style="text-align:left"
+							title="{{ i18n.btn_logout }}"  aria-label="{{ i18n.btn_logout }}">  
+					<i class="material-icons md-36">exit_to_app</i>{{ i18n.btn_logout }}
+				</md-button>			
+			   
+			</md-sidenav>
+			
+			<md-sidenav class="md-sidenav-right" md-theme="blue-grey" 				
+				md-component-id="right" ng-click="mainctrl.closeToggleRight()">		
+		
+				<md-list class="fixedRows">
+					<md-list-item class="md-2-line contact-item">
+						<img ng-src="{{ user.avatarSrc }}" class="md-avatar" alt="{{ mainctrl.user.nome }}" />
+						<div class="md-list-item-text compact">
+							<h4>{{ user.nome }}</h4>
+							<p>{{ user.email }}</p>
+							<p>{{ user.loja }}</p>
+						</div>
+					</md-list-item>
+			    </md-list>			
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/user/0" style="text-align:left"
+							title="{{ i18n.btn_profile }}" aria-label="{{ i18n.btn_profile }}">  
+					<i class="material-icons md-36">account_box</i>{{ i18n.btn_profile }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/login/change" style="text-align:left"
+							title="{{ i18n.btn_change_pass }}"  aria-label="{{ i18n.btn_change_pass }}">  
+					<i class="material-icons md-36">security</i>{{ i18n.btn_change_pass }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/subscription/0" style="text-align:left"
+							title="{{ i18n.btn_subscription }}"  aria-label="{{ i18n.btn_subscription }}">  
+					<i class="material-icons md-36">receipt</i>{{ i18n.btn_subscription }}
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-href="#/terms" style="text-align:left"
+							title="{{ i18n.tlt_view_tc }}"aria-label="{{ i18n.tlt_view_tc }}">
+					<i class="material-icons md-36" alt="{{ i18n.btn_print }}">assignment</i>{{ i18n.tlt_view_tc }}						
+				</md-button>
+				
+				<md-button class="md-toolbar md-primary" ng-click="mainctrl.logout()" style="text-align:left"
+							title="{{ i18n.btn_logout }}"  aria-label="{{ i18n.btn_logout }}">  
+					<i class="material-icons md-36">exit_to_app</i>{{ i18n.btn_logout }}
+				</md-button>	    
+			   
+			</md-sidenav>   	
+		</div>	
+	</body>
 </html>

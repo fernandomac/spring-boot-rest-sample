@@ -1,0 +1,108 @@
+<div ng-cloak layout="column" flex="100" layout-fill>	
+
+	<div flex="10">
+		<md-content md-theme="dark-orange" class="md-toolbar-tools">	
+			<md-button class="md-icon-button md-primary" ng-click="mainctrl.openToggleLeft()" 
+			           title="{{ i18n.menu_main }}"  aria-label="{{ i18n.menu_main }}">
+				<i class="material-icons md-24">menu</i>
+			</md-button>
+			<span flex>{{ i18n.tlt_view_search }} {{ i18n.tlt_view_customer }}</span>
+			<md-button class="md-icon-button md-primary" ng-href="#/main/"
+				aria-label="{{ i18n.btn_close }}" title="{{ i18n.btn_close }}">
+				<i class="material-icons md-24">close</i>
+			</md-button>					
+		</md-content>
+	</div>
+	
+	<div flex="80" ng-if="!schcusctrl.loaded" class="md-inline-form" layout-padding>
+		<div layout="column" flex-gt-sm="50" flex="100">
+			<md-content md-theme="blue-grey">	
+				<form>
+					<md-input-container flex class="md-block">
+						<label>{{ i18n.lbl_field_cpf_cnpj }}</label>
+						<input ng-model="schcusctrl.cliente.cadastroNacional">
+					</md-input-container>
+					
+					<md-input-container flex class="md-block">
+						<label>	{{ i18n.lbl_field_name }} </label>
+						<input ng-model="schcusctrl.cliente.nome">
+					</md-input-container>
+					
+					<md-autocomplete flex class="md-block"
+						md-no-cache="true"
+						md-selected-item="schcusctrl.cliente.cidade"
+						md-search-text="schcusctrl.cidadeText"
+						md-items="item in schcusctrl.queryCidade(schcusctrl.cidadeText)"
+						md-item-text="item.value"
+						md-min-length="2"
+						md-floating-label="{{ i18n.lbl_field_city}}">
+						<md-item-template>
+							<span md-highlight-text="schcusctrl.cidadeText" md-highlight-flags="^i">{{ item.value }}</span>
+						</md-item-template>
+						<md-not-found>
+						  "{{ schcusctrl.cidadeText }}" {{ i18n.msg_autocomplete_not_found }}					 
+						</md-not-found>					
+					</md-autocomplete>			
+				</form>
+			</md-content>
+		</div>
+	</div>
+
+	<div layout="row" flex="80" ng-if="schcusctrl.loaded " layout-padding>
+		<div layout="column" flex-gt-sm="66" flex="100">
+			<md-content md-theme="blue-grey">	
+				<div class="table-header" layout="row" layout-align="center center">
+			    	<div flex="10"></div>
+					<div flex="50" flex-xs="75">Nome</div>
+					<div flex="30" hide-xs>CPF / CNPJ</div>										
+					<div flex="10" flex-xs="15"></div>	
+				</div>
+				
+				<div ng-repeat="item in schcusctrl.searchResult track by $index">
+					<div layout="row" class="table-cell" layout-align="center center">
+					 	<div flex="10">
+					 		<i ng-hide="item.ativo" class="material-icons md-16"
+						 		aria-label="{{ i18n.lbl_deactivated }}" title="{{ i18n.lbl_deactivated }}">
+						 		visibility_off
+						 	</i>
+					 	</div>
+					 	<div flex="50" flex-xs="75" ng-click="schcusctrl.details($index)">  {{ item.nome }} </div>
+					 	<div flex="30" hide-xs> {{ item.cadastroNacional | cadastroNacional }} </div>
+					  	<div flex="10" flex-xs="15">
+						  	<md-button class="md-icon-button md-primary" ng-href="#/customer/{{ item.id }}" 
+						  				aria-label="{{ i18n.btn_edit }}" title="{{ i18n.btn_edit }}">
+								<i class="material-icons md-18" alt="{{ i18n.btn_edit }}">edit</i>				
+							</md-button>
+						</div>
+					</div>				
+				</div>
+			</div>
+		</md-content>
+	</div>
+	
+	<div layout="row" flex="10" layout-align="center end">			
+		<md-content md-theme="dark-orange" class="md-toolbar-tools" layout-align="center center">
+			<div flex="50" ng-if="!schcusctrl.loaded ">
+				<md-button class="md-toolbar md-primary" ng-click="schcusctrl.search()" 
+					aria-label="{{ i18n.btn_search }}" title="{{ i18n.btn_search }}">
+					<i class="material-icons" alt="{{ i18n.btn_search }}">search</i>				
+				</md-button>
+			</div>
+			
+			<div flex="50" ng-if="schcusctrl.loaded ">
+				<md-button class="md-toolbar md-primary" ng-click="schcusctrl.clear()" 
+					aria-label="{{ i18n.btn_back }}" title="{{ i18n.btn_back }}">
+					<i class="material-icons" alt="{{ i18n.btn_back }}">keyboard_backspace</i>				
+				</md-button>
+			</div>
+			
+			<div flex="50">
+				<md-button class="md-toolbar md-primary" ng-click="mainctrl.goHref('#/customer/0');" 
+					aria-label="{{ i18n.btn_add }}" title="{{ i18n.btn_add }}">
+					<i class="material-icons" alt="{{ i18n.btn_add }}">add_circle</i>				
+				</md-button>
+			</div>		
+		</md-content>
+	</div>
+
+</div>

@@ -1,0 +1,214 @@
+<div ng-cloak layout="column" flex="100" layout-fill>	
+
+	<div layout="row"  flex="10">
+		<md-content md-theme="dark-orange" class="md-toolbar-tools">	
+			<md-button class="md-icon-button md-primary" ng-click="mainctrl.openToggleLeft()" 
+			           title="{{ i18n.menu_main }}"  aria-label="{{ i18n.menu_main }}">
+				<i class="material-icons md-24">menu</i>
+			</md-button>
+			<span flex>{{ i18n.tlt_view_customer }}</span>
+			<md-button class="md-icon-button md-primary" ng-click="mainctrl.back()"
+				aria-label="{{ i18n.btn_close }}" title="{{ i18n.btn_close }}">
+				<i class="material-icons md-24">close</i>
+			</md-button>					
+		</md-content>
+	</div>
+	
+	<div layout="row" flex="80" layout-padding>
+		<div layout="column" flex-gt-sm="80" flex="100">
+			<md-content md-theme="blue-grey">		
+				<form name="myForm">
+					<input ng-model="cusctrl.id" type="hidden">	
+					
+					<div layout="row" layout-align="start start" flex-gt-xs="50" flex>
+						<md-input-container flex="50">
+							<label>{{ i18n.lbl_field_type }}</label>
+							<md-select name="tipo" ng-model="cusctrl.cliente.tipo.key" required
+									   ng-disabled=" cusctrl.id > 0 ">
+					            <md-option ng-repeat="tipo in cusctrl.tipoEntidade" value="{{ tipo.key }} " ng-selected="$first">
+					            	{{ tipo.value }}
+					            </md-option>
+				            </md-select>
+				            <div ng-messages="myForm.tipo.$error" role="alert" multiple>
+				            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>
+				            </div>
+						</md-input-container>
+						
+						<span ng-if=" cusctrl.cliente.tipo.key == 'FISICA'">
+							<md-input-container flex >
+								<label>{{ i18n.lbl_field_cpf }}</label>
+								<input name="cpf" ng-model="cusctrl.cliente.cadastroNacional" type="tel" pattern="^\d{3}[.]{0,1}\d{3}[.]{0,1}\d{3}[-]{0,1}\d{2}$" maxlength="14" required>
+								<div ng-messages="myForm.cpf.$error" role="alert" multiple>
+					            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>
+					            	<div ng-message="pattern" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+					            </div>
+							</md-input-container>							
+						</span>
+						
+						<span ng-if=" cusctrl.cliente.tipo.key == 'JURIDICA'">
+							<md-input-container flex>
+								<label>{{ i18n.lbl_field_cnpj }}</label>
+								<input name="cnpj" ng-model="cusctrl.cliente.cadastroNacional" type="tel" pattern="^\d{2}[.]{0,1}\d{3}[.]{0,1}\d{3}[/]{0,1}\d{4}[-]{0,1}\d{2}$" maxlength="18" required>
+								<div ng-messages="myForm.cnpj.$error" role="alert" multiple>
+					            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>
+					            	<div ng-message="pattern" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+					            </div>
+							</md-input-container>
+						</span>						
+					</div>					
+					
+					<div layout-gt-xs="row" ng-if=" cusctrl.cliente.tipo.key == 'FISICA'">
+						<md-input-container class="md-block" flex-gt-xs="50">
+							<label>{{ i18n.lbl_field_name }}</label>
+							<input name="nome" ng-model="cusctrl.cliente.nome" required>
+							<div ng-messages="myForm.nome.$error" role="alert" multiple>
+				            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>				            	
+				            </div>
+						</md-input-container>
+						
+						<md-input-container flex>
+							<label>{{ i18n.lbl_field_nickname }}</label>
+							<input ng-model="cusctrl.cliente.nomeCurto">
+						</md-input-container>												
+					</div>
+					
+					<div layout-gt-xs="row" ng-if=" cusctrl.cliente.tipo.key == 'JURIDICA'">
+						<md-input-container class="md-block" flex-gt-xs="50">
+							<label>{{ i18n.lbl_field_razao  }}</label>
+							<input name="razao" ng-model="cusctrl.cliente.name" required>
+							<div ng-messages="myForm.razao.$error" role="alert" multiple>
+				            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>				            	
+				            </div>
+						</md-input-container>
+						
+						<md-input-container flex>
+							<label>{{ i18n.lbl_field_trading_name }}</label>
+							<input ng-model="cusctrl.cliente.shortName">
+						</md-input-container>												
+					</div>
+					
+					<div layout-gt-xs="row">				
+						<md-input-container class="md-block" flex-gt-xs="50">
+							<label>{{ i18n.lbl_field_email }}</label>
+							<input name="email" ng-model="cusctrl.cliente.contato.email" type="email">
+							<div ng-messages="myForm.email.$error" role="alert" multiple>
+								<div ng-message="email" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+				            </div>
+						</md-input-container>
+							
+						<md-input-container flex="15">
+							<label>{{ i18n.lbl_field_ddd }}</label> 
+							<input name="ddd" ng-model="cusctrl.cliente.contato.ddd" type="tel" pattern="^\d{2}$" maxlength="2" required>
+							<div ng-messages="myForm.ddd.$error" role="alert" multiple>
+				            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>
+				            	<div ng-message="pattern" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+				            </div>
+						</md-input-container>
+						
+						<md-input-container flex>
+							<label>{{ i18n.lbl_field_phone }}</label>
+							<input name="fone" ng-model="cusctrl.cliente.contato.telefone" type="tel" pattern="^\d{4,5}[-]{0,1}\d{4}$" maxlength="10" required>
+							<div ng-messages="myForm.fone.$error" role="alert" multiple>
+				            	<div ng-message="required" class="my-message">{{ cusctrl.i18n.msg_mandatory_field_error }}</div>
+				            	<div ng-message="pattern" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+				            </div>
+						</md-input-container>	
+					</div>
+					
+					<div layout="row" layout-align="start start">	
+						<md-input-container flex="40">
+							<label>{{ i18n.lbl_field_cep }}</label>
+							<input name="cep" ng-model="cusctrl.cliente.endereco.cep" type="tel" pattern="^\d{5}[-]{0,1}\d{3}$" maxlength="9">
+							<div ng-messages="myForm.cep.$error" role="alert" multiple>				            	
+				            	<div ng-message="pattern" class="my-message">{{ cusctrl.i18n.msg_invalid_field_error }}</div>
+				            </div>
+						</md-input-container>
+						
+						<div flex>
+							<md-button class="md-raised md-primary"  
+							 	ng-click="cusctrl.searchCep(cusctrl.cliente.endereco.cep)"
+							 	ng-disabled="(!cusctrl.cliente.endereco.cep || cusctrl.cliente.endereco.cep.length < 8)">
+							 	{{ i18n.btn_search_address }}
+							</md-button>
+						</div>
+					 </div>
+					
+					<div layout-gt-xs="row">	
+						<md-input-container class="md-block" flex-gt-xs="85">
+							<label>{{ i18n.lbl_field_street }}</label>
+							<input ng-model="cusctrl.cliente.endereco.logradouro">
+						</md-input-container>
+						
+						<md-input-container flex-gt-xs="15">
+							<label>{{ i18n.lbl_field_number }}</label>
+							<input ng-model="cusctrl.cliente.endereco.numero">
+						</md-input-container>
+					</div>
+					
+					<div layout-gt-xs="row">
+						<md-input-container flex>
+							<label>{{ i18n.lbl_field_complement }}</label>
+							<input ng-model="cusctrl.cliente.endereco.complemento">
+						</md-input-container>
+						
+						<md-input-container flex>
+							<label>{{ i18n.lbl_field_neighboor }}</label>
+							<input ng-model="cusctrl.cliente.endereco.bairro">
+						</md-input-container>			
+						
+						<md-autocomplete flex
+							md-no-cache="true"
+							md-selected-item="cusctrl.cliente.endereco.cidade"
+							md-search-text="cusctrl.cidadeText"
+							md-items="item in cusctrl.queryCidade(cusctrl.cidadeText)"
+							md-item-text="item.value"
+							md-min-length="2"
+							md-floating-label="{{ i18n.lbl_field_city}}">
+							<md-item-template>
+								<span md-highlight-text="cusctrl.cidadeText" md-highlight-flags="^i">{{ item.value }}</span>
+							</md-item-template>
+							<md-not-found>
+							  "{{ cusctrl.cidadeText }}" {{ i18n.msg_autocomplete_not_found }}					 
+							</md-not-found>
+						</md-autocomplete>
+					</div>		
+				</form>
+			</md-content>
+		</div>
+	</div>
+	
+	<div layout="row" flex="10" layout-align="center end">			
+		<md-content md-theme="dark-orange" class="md-toolbar-tools" layout-align="center center">
+			<div flex="30" ng-if="cusctrl.cliente.ativo ">
+				<md-button class="md-toolbar md-primary" ng-click="cusctrl.deactivate()" 
+					aria-label="{{ i18n.btn_remove }}" title="{{ i18n.btn_remove }}"
+					ng-disabled="cusctrl.id == 0" >
+					<i class="material-icons" alt="{{ i18n.btn_remove }}">delete_forever</i>							
+				</md-button>
+			</div>
+			
+			<div flex="30" ng-if="!cusctrl.cliente.ativo">
+				<md-button class="md-toolbar md-primary" ng-click="cusctrl.activate()" 
+					aria-label="{{ i18n.btn_reactivate }}" title="{{ i18n.btn_reactivate }}"
+					ng-disabled="cusctrl.id == 0">
+					<i class="material-icons" alt="{{ i18n.btn_reactivate }}">undo</i>							
+				</md-button>
+			</div>
+			
+			<div flex="30">
+				<md-button class="md-toolbar md-primary" ng-click="cusctrl.save(myForm)"
+					aria-label="{{ i18n.btn_save }}" title="{{ i18n.btn_save }}">
+					<i class="material-icons" alt="{{ i18n.btn_save }}">save</i>				
+				</md-button>
+			</div>
+			
+			<div flex="30">
+				<md-button class="md-toolbar md-primary" ng-click="cusctrl.clear(myForm)" 
+					aria-label="{{ i18n.btn_add }}" title="{{ i18n.btn_add }}"
+					ng-disabled="cusctrl.id == 0">
+					<i class="material-icons" alt="{{ i18n.btn_add }}">add_circle</i>				
+				</md-button>
+			</div>		
+		</md-content>
+	</div>
+</div>
